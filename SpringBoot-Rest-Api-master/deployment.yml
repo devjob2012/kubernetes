@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-deven
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring-boot-deven
+  template:
+    metadata:
+      labels:
+        app: spring-boot-deven
+    spec:
+      containers:
+        - name: spring-boot-deven
+          image: spring-boot-deven:latest
+          ports:
+            - containerPort: 8070
+          imagePullPolicy: Never
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-deven
+spec:
+  selector:
+    app: spring-boot-deven
+  ports:
+    - port: 8060
+      targetPort: 8070
+  type: LoadBalancer
